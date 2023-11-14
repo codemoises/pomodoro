@@ -1,7 +1,9 @@
-export default function App() {
+import { PomodoroTimer } from "./components/pomodoro-timer";
+
+export default function App(): JSX.Element {
     return (
         <div className="App">
-            <h1>oi</h1>
+            <PomodoroTimer defaultPomodoroTime={1500} />
         </div>
     );
 }
