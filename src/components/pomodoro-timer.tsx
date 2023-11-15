@@ -19,7 +19,7 @@ export function PomodoroTimer(props: Props): JSX.Element {
     useEffect(() => {
         if(working) document.body.classList.add('working');
         if(resting) document.body.classList.remove('working');
-    }, [working]);
+    }, [resting, working]);
 
     useInterval(() => {
         setMainTime(mainTime - 1);
@@ -42,7 +42,7 @@ export function PomodoroTimer(props: Props): JSX.Element {
             setMainTime(props.longRestTime);
         } else {
             setMainTime(props.shortRestTime);
-        }
+        };
     };
 
     return (
