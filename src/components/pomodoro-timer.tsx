@@ -3,6 +3,8 @@ import { useInterval } from "../hooks/use-interval";
 import Button from "./Button";
 import Timer from "./timer";
 import secondsToTime from "../utils/seconds-to-time";
+import ButtonPlay from "./ButtonPlay";
+import ButtonPause from "./ButtonPause";
 
 const bellStart = require("../sounds/bell-start.mp3");
 const bellFinish = require("../sounds/bell-finish.mp3");
@@ -61,8 +63,18 @@ export function PomodoroTimer(props: Props): JSX.Element {
   }, [props.longRestTime, props.shortRestTime]);
 
   useEffect(() => {
-    if (working) document.body.classList.add("working");
-    if (resting) document.body.classList.remove("working");
+    if (working) {
+      document.body.classList.add("working");
+      document.body.classList.remove("resting");
+      document.body.querySelector(".pomodoro")?.classList.remove("resting-pomodoro");
+
+    };
+
+    if (resting) {
+      document.body.classList.remove("working");
+      document.body.classList.add("resting");
+      document.body.querySelector(".pomodoro")?.classList.add("resting-pomodoro");
+    };
 
     if (mainTime > 0) return;
 
@@ -92,18 +104,23 @@ export function PomodoroTimer(props: Props): JSX.Element {
 
   return (
     <div className="pomodoro">
-      <h2>{working ? 'Trabalhando' : 'Descansando'}</h2>
-      <Timer mainTime={mainTime} />
-
       <div className="controls">
-        <Button text="Work" onClick={() => configureWork()} />
-        <Button text="Rest" onClick={() => configureRest(false)} />
-        <Button
-          className={!working && !resting ? "hidden" : ""}
-          text={timeCounting ? "Pause" : "Play"}
-          onClick={() => setTimeCounting(!timeCounting)}
-        />
+        <div className={working && !resting ? "button-active" : ""}>
+          <Button text="Work" onClick={() => configureWork()} />
+        </div>
+        <div className={resting && !working ? "button-active" : ""}>
+          <Button text="Rest" onClick={() => configureRest(false)} />
+        </div>
       </div>
+      <Timer mainTime={mainTime} />
+      <div className="play-and-pause">
+            <div className={!working && !resting ? "button-width" : "hidden"}>
+                <ButtonPlay onClick={() => configureWork()} />
+            </div> 
+            <div className={!working && !resting ? "hidden" : "button-width"}>
+                {timeCounting ? <ButtonPause onClick={() => setTimeCounting(!timeCounting)} /> : <ButtonPlay onClick={() => setTimeCounting(!timeCounting)} />}
+            </div> 
+        </div>
       <div className="details">
         <p>Ciclos concluídos: {completedCycles}</p>
         <p>Horas trabalhadas: {secondsToTime(fullWorkingTime)}</p>
@@ -111,4 +128,4 @@ export function PomodoroTimer(props: Props): JSX.Element {
       </div>
     </div>
   );
-}
+};
