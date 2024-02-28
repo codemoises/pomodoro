@@ -114,13 +114,13 @@ export function PomodoroTimer(props: Props): JSX.Element {
       </div>
       <Timer mainTime={mainTime} />
       <div className="play-and-pause">
-            <div className={!working && !resting ? "button-width" : "hidden"}>
-                <ButtonPlay onClick={() => configureWork()} />
-            </div> 
-            <div className={!working && !resting ? "hidden" : "button-width"}>
-                {timeCounting ? <ButtonPause onClick={() => setTimeCounting(!timeCounting)} /> : <ButtonPlay onClick={() => setTimeCounting(!timeCounting)} />}
-            </div> 
-        </div>
+        <div className={!working && !resting ? "button-width" : "hidden"}>
+          <ButtonPlay onClick={() => configureWork()} />
+        </div> 
+        <div className={!working && !resting ? "hidden" : "button-width"}>
+          {timeCounting ? <ButtonPause onClick={() => setTimeCounting(!timeCounting)} /> : <ButtonPlay onClick={() => setTimeCounting(!timeCounting)} />}
+        </div> 
+      </div>
       <div className="details">
         <p>Ciclos concluídos: {completedCycles}</p>
         <p>Horas trabalhadas: {secondsToTime(fullWorkingTime)}</p>
