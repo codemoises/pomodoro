@@ -104,12 +104,29 @@ export function PomodoroTimer(props: Props): JSX.Element {
 
   return (
     <div className="pomodoro">
+      <div className="messages">
+        <div className={!working && !timeCounting && !resting ? "message" : "hidden"}>
+          <p>Olá! Esse é o seu pomodoro! 🕐</p>
+        </div>
+        <div className={working && timeCounting && !resting ? "message" : "hidden"}>
+          <p>Bom trabalho para você! 💥</p>
+        </div>
+        <div className={!timeCounting && working ? "message" : "hidden"}>
+          <p>Tempo parado! 🛑</p>
+        </div>
+        <div className={!timeCounting && resting ? "message" : "hidden"}>
+          <p>Tempo parado! 🛑</p>
+        </div>
+        <div className={!working && timeCounting && resting ? "message" : "hidden"}>
+          <p>Aproveite seu tempo de descanso! 💤</p>
+        </div>
+      </div>
       <div className="controls">
         <div className={working && !resting ? "button-active" : ""}>
-          <Button text="Work" onClick={() => configureWork()} />
+          <Button text="pomodoro" onClick={() => configureWork()} />
         </div>
         <div className={resting && !working ? "button-active" : ""}>
-          <Button text="Rest" onClick={() => configureRest(false)} />
+          <Button text="descansar" onClick={() => configureRest(false)} />
         </div>
       </div>
       <Timer mainTime={mainTime} />
